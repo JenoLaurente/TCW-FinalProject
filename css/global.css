@@ -1,0 +1,219 @@
+/* Global Connections Section Styles */
+.global-section {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+}
+
+.global-section .section-header h2 {
+    color: white;
+}
+
+.global-section .section-header p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.global-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.global-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.global-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #d4af37, #c9a876);
+    border-radius: 20px 20px 0 0;
+}
+
+.global-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-icon {
+    background: linear-gradient(135deg, #d4af37, #c9a876);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.global-card:hover .card-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.card-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.global-card h3 {
+    color: #d4af37;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.global-card p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.global-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.global-card li {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.6rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+}
+
+.global-card li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    color: #d4af37;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.global-card li:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.global-card li:hover::before {
+    transform: translateX(3px);
+    color: #f1c40f;
+}
+
+/* Global Card Animations */
+.global-card.animate-left {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.global-card.animate-right {
+    animation: slideInRight 0.8s ease-out;
+}
+
+.global-card.animate-up {
+    animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .global-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .global-card {
+        padding: 1.5rem;
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .card-icon i {
+        font-size: 1.5rem;
+    }
+
+    .global-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .global-card p {
+        font-size: 0.95rem;
+    }
+
+    .global-card li {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .global-card {
+        padding: 1rem;
+    }
+
+    .card-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 1rem;
+    }
+
+    .card-icon i {
+        font-size: 1.3rem;
+    }
+
+    .global-card h3 {
+        font-size: 1.1rem;
+    }
+}

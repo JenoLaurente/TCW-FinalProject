@@ -1,0 +1,290 @@
+/* Issues Section Styles */
+.issues-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.issues-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.issue-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+}
+
+.issue-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.issue-header {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.issue-header i {
+    font-size: 2.5rem;
+    color: #d4af37;
+    opacity: 0.9;
+}
+
+.issue-header h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.issue-content {
+    padding: 2rem;
+}
+
+.challenge,
+.impacts,
+.solutions {
+    margin-bottom: 2rem;
+}
+
+.challenge h4,
+.impacts h4,
+.solutions h4 {
+    color: #2c3e50;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #d4af37;
+    position: relative;
+}
+
+.challenge h4::after,
+.impacts h4::after,
+.solutions h4::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, #d4af37, #c9a876);
+}
+
+.challenge p {
+    color: #666;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.impacts ul,
+.solutions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.impacts li,
+.solutions li {
+    padding: 0.8rem 0;
+    padding-left: 2rem;
+    position: relative;
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.impacts li:last-child,
+.solutions li:last-child {
+    border-bottom: none;
+}
+
+.impacts li::before {
+    content: '⚠';
+    position: absolute;
+    left: 0;
+    top: 0.8rem;
+    color: #e74c3c;
+    font-size: 1.1rem;
+}
+
+.solutions li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0.8rem;
+    color: #27ae60;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.impacts li:hover,
+.solutions li:hover {
+    background: rgba(212, 175, 55, 0.05);
+    transform: translateX(5px);
+    color: #2c3e50;
+    padding-left: 2.5rem;
+}
+
+/* Additional Challenges Section */
+.additional-challenges {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.additional-challenges h3 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.additional-challenges h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #d4af37, #c9a876);
+    border-radius: 2px;
+}
+
+.challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.challenge-item {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.challenge-item:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, #d4af37, #c9a876);
+    color: white;
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.challenge-item i {
+    font-size: 2.5rem;
+    color: #d4af37;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.challenge-item:hover i {
+    color: white;
+    transform: scale(1.1);
+}
+
+.challenge-item h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.challenge-item:hover h4 {
+    color: white;
+}
+
+.challenge-item p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.challenge-item:hover p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .issue-header {
+        padding: 1.5rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .issue-header i {
+        font-size: 2rem;
+    }
+
+    .issue-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .issue-content {
+        padding: 1.5rem;
+    }
+
+    .challenge h4,
+    .impacts h4,
+    .solutions h4 {
+        font-size: 1.2rem;
+    }
+
+    .additional-challenges {
+        padding: 2rem;
+    }
+
+    .additional-challenges h3 {
+        font-size: 1.6rem;
+    }
+
+    .challenges-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .challenge-item {
+        padding: 1.5rem;
+    }
+
+    .challenge-item i {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .issue-header {
+        padding: 1rem;
+    }
+
+    .issue-content {
+        padding: 1rem;
+    }
+
+    .additional-challenges {
+        padding: 1rem;
+    }
+
+    .challenge-item {
+        padding: 1rem;
+    }
+}

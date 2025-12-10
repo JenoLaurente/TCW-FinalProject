@@ -1,0 +1,235 @@
+/* References Section Styles */
+.references-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    position: relative;
+}
+
+.references-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.references-list {
+    background: white;
+    border-radius: 25px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.reference-category {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.reference-category:last-child {
+    margin-bottom: 2rem;
+}
+
+.reference-category h3 {
+    color: #2c3e50;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    border-left: 5px solid #d4af37;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.reference-category h3:hover {
+    background: linear-gradient(135deg, #d4af37, #c9a876);
+    color: white;
+    transform: translateX(5px);
+}
+
+.reference-category h3::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background: #d4af37;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.reference-category h3:hover::before {
+    background: white;
+    transform: translateY(-50%) scale(1.2);
+}
+
+.reference-category ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.reference-category li {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(135deg, #fafafa, #f5f5f5);
+    border-radius: 10px;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+    position: relative;
+    overflow: hidden;
+}
+
+.reference-category li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(201, 168, 118, 0.1));
+    transition: all 0.3s ease;
+}
+
+.reference-category li:hover {
+    transform: translateX(5px);
+    border-left-color: #d4af37;
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.reference-category li:hover::before {
+    width: 100%;
+}
+
+.reference-category li em {
+    font-style: italic;
+    color: #666;
+    font-weight: 500;
+}
+
+.reference-category li strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Citation Note Styles */
+.citation-note {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    margin-top: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.citation-note::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #d4af37, #c9a876, #d4af37);
+}
+
+.citation-note p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    opacity: 0.95;
+}
+
+.citation-note p:last-child {
+    margin-bottom: 0;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.citation-note strong {
+    color: #d4af37;
+    font-weight: 600;
+}
+
+/* Reference Animation on Scroll */
+.references-list.animate {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.reference-category.animate {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .references-list {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+
+    .reference-category h3 {
+        font-size: 1.4rem;
+        padding: 0.8rem;
+    }
+
+    .reference-category li {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .citation-note {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .references-list {
+        padding: 1rem;
+        border-radius: 15px;
+    }
+
+    .reference-category h3 {
+        font-size: 1.2rem;
+        padding: 0.6rem;
+    }
+
+    .reference-category li {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .citation-note {
+        padding: 1rem;
+    }
+
+    .citation-note p {
+        font-size: 0.9rem;
+    }
+}

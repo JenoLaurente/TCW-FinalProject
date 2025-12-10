@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai: A Cultural Journey | Digital e-Portfolio</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Spline 3D Viewer -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.6/build/spline-viewer.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Components will be loaded here -->
+    <div id="preloader-slot"></div>
+    <div id="navigation-slot"></div>
+    <div id="hero-slot"></div>
+    <div id="about-slot"></div>
+    <div id="profile-slot"></div>
+    <div id="culture-slot"></div>
+    <div id="global-slot"></div>
+    <div id="issues-slot"></div>
+    <div id="reflection-slot"></div>
+    <div id="references-slot"></div>
+    <div id="footer-slot"></div>
+
+    <!-- Component Loader -->
+    <script>
+        // Load all components
+        async function loadComponent(slotId, componentPath) {
+            try {
+                const response = await fetch(componentPath);
+                if (!response.ok) throw new Error(`Failed to load ${componentPath}`);
+                const html = await response.text();
+                document.getElementById(slotId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading component: ${componentPath}`, error);
+            }
+        }
+
+        // Load all components in order
+        async function loadAllComponents() {
+            const components = [
+                { slot: 'preloader-slot', path: 'components/preloader.html' },
+                { slot: 'navigation-slot', path: 'components/navigation.html' },
+                { slot: 'hero-slot', path: 'components/hero.html' },
+                { slot: 'about-slot', path: 'components/about.html' },
+                { slot: 'profile-slot', path: 'components/profile.html' },
+                { slot: 'culture-slot', path: 'components/culture.html' },
+                { slot: 'global-slot', path: 'components/global.html' },
+                { slot: 'issues-slot', path: 'components/issues.html' },
+                { slot: 'reflection-slot', path: 'components/reflection.html' },
+                { slot: 'references-slot', path: 'components/references.html' },
+                { slot: 'footer-slot', path: 'components/footer.html' }
+            ];
+
+            // Load all components
+            await Promise.all(components.map(c => loadComponent(c.slot, c.path)));
+            
+            // Dispatch event when all components are loaded
+            window.dispatchEvent(new Event('componentsLoaded'));
+        }
+
+        // Start loading
+        loadAllComponents();
+    </script>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
