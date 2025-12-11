@@ -12,16 +12,22 @@ class ScrollAnimations {
     }
 
     setupIntersectionObserver() {
+        // Optimized options for better performance
         const options = {
-            rootMargin: '0px 0px -100px 0px',
+            rootMargin: '0px 0px -50px 0px', // Reduced margin for earlier trigger
             threshold: 0.1
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !this.animatedElements.has(entry.target)) {
-                    this.animateElement(entry.target);
-                    this.animatedElements.add(entry.target);
+                    // Use RAF for smoother animation triggering
+                    requestAnimationFrame(() => {
+                        this.animateElement(entry.target);
+                        this.animatedElements.add(entry.target);
+                    });
+                    // Unobserve after animation to free resources
+                    observer.unobserve(entry.target);
                 }
             });
         }, options);
@@ -97,14 +103,26 @@ class ScrollAnimations {
         const backToTopBtn = document.getElementById('backToTop');
         if (!backToTopBtn) return;
 
-        // Show/hide button based on scroll position
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
+        let lastScrollY = 0;
+        let ticking = false;
+
+        // Show/hide button based on scroll position - optimized with RAF
+        const handleScroll = () => {
+            lastScrollY = window.pageYOffset;
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    if (lastScrollY > 300) {
+                        backToTopBtn.classList.add('show');
+                    } else {
+                        backToTopBtn.classList.remove('show');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
-        });
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         // Scroll to top when clicked
         backToTopBtn.addEventListener('click', () => {
@@ -116,22 +134,33 @@ class ScrollAnimations {
     }
 }
 
-// Parallax effect for hero section
+// Parallax effect for hero section - disabled on mobile for performance
 class ParallaxEffect {
     constructor() {
         this.heroContent = document.querySelector('.hero-content');
+        this.isMobile = window.innerWidth <= 768;
+        this.ticking = false;
         this.init();
     }
 
     init() {
+        // Skip parallax on mobile devices for better performance
+        if (this.isMobile) return;
+        
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            
-            if (this.heroContent && scrolled < window.innerHeight) {
-                this.heroContent.style.transform = `translateY(${rate}px)`;
+            if (!this.ticking) {
+                requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const rate = scrolled * -0.3; // Reduced parallax intensity
+                    
+                    if (this.heroContent && scrolled < window.innerHeight) {
+                        this.heroContent.style.transform = `translate3d(0, ${rate}px, 0)`;
+                    }
+                    this.ticking = false;
+                });
+                this.ticking = true;
             }
-        });
+        }, { passive: true });
     }
 }
 

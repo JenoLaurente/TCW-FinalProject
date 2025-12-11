@@ -41,6 +41,8 @@ html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Improve scroll performance */
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -49,6 +51,8 @@ body {
     color: var(--white);
     line-height: 1.6;
     overflow-x: hidden;
+    /* Improve rendering performance */
+    text-rendering: optimizeSpeed;
 }
 
 body.loading {
@@ -106,6 +110,30 @@ img[loading="lazy"] {
     will-change: transform, opacity;
     transform: translateZ(0);
     backface-visibility: hidden;
+    /* Add contain for better paint isolation */
+    contain: layout style;
+}
+
+/* Touch-friendly interactions for mobile */
+body.is-touch .btn,
+body.is-touch .nav-link,
+body.is-touch .profile-card,
+body.is-touch .culture-card {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Reduce animations on mobile for performance */
+body.is-mobile .spline-globe-container {
+    transition: transform 0.1s linear, opacity 0.2s ease !important;
+}
+
+body.is-mobile .gallery-image {
+    transition: all 0.4s ease !important;
+}
+
+body.is-mobile .particle {
+    display: none !important;
 }
 
 /* =====================================================
@@ -448,12 +476,16 @@ body.scrolled-past-hero .globe-wrapper {
     transition: transform 0.15s linear, opacity 0.3s ease;
     transform-origin: center center;
     contain: layout style paint;
+    /* Improve rendering performance */
+    isolation: isolate;
 }
 
 .spline-globe-container spline-viewer {
     width: 100%;
     height: 100%;
     --spline-viewer-background: transparent;
+    /* Optimize canvas rendering */
+    image-rendering: optimizeSpeed;
 }
 
 /* Hide Spline watermark */
@@ -2366,7 +2398,14 @@ body.scrolled-past-hero .social-links {
 /* =====================================================
    RESPONSIVE DESIGN
    ===================================================== */
+
+/* Tablet optimization - reduce animation complexity */
 @media (max-width: 1024px) {
+    /* Performance optimizations */
+    .spline-globe-container {
+        transition: transform 0.12s linear, opacity 0.25s ease !important;
+    }
+    
     .nav-menu {
         position: fixed;
         top: 0;
@@ -2447,6 +2486,31 @@ body.scrolled-past-hero .social-links {
 }
 
 @media (max-width: 768px) {
+    /* Critical mobile performance optimizations */
+    html {
+        scroll-behavior: auto; /* Disable smooth scroll for better performance */
+    }
+    
+    /* Reduce animation complexity */
+    .gallery-image,
+    .culture-card,
+    .profile-card,
+    .global-card {
+        transition-duration: 0.2s !important;
+    }
+    
+    /* Disable complex hover effects on touch devices */
+    .gallery-image:hover img,
+    .culture-card:hover,
+    .profile-card:hover {
+        transform: none !important;
+    }
+    
+    /* Simplify spline transitions on mobile */
+    .spline-globe-container {
+        transition: transform 0.08s linear, opacity 0.2s ease !important;
+    }
+
     .hero-stats {
         gap: 1.5rem;
     }
@@ -2529,6 +2593,18 @@ body.scrolled-past-hero .social-links {
 }
 
 @media (max-width: 480px) {
+    /* Maximum mobile optimizations */
+    * {
+        /* Disable animations for smoothest scrolling */
+        animation-duration: 0.3s !important;
+    }
+    
+    /* Hide heavy elements on small screens */
+    .stars-bg::before,
+    .stars-bg::after {
+        display: none;
+    }
+    
     .section {
         padding: 5rem 0;
     }

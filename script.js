@@ -9,7 +9,10 @@ const CONFIG = {
     particleCount: 25,
     preloaderDuration: 2000,
     scrollThreshold: 100,
-    heroHeight: window.innerHeight
+    heroHeight: window.innerHeight,
+    isMobile: window.innerWidth <= 768,
+    isTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+    reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
 };
 
 // Performance optimization - throttle function
@@ -24,12 +27,23 @@ function throttle(func, limit) {
     };
 }
 
-// RequestAnimationFrame-based scroll handler
+// Debounce function for resize events
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+// RequestAnimationFrame-based scroll handler with improved performance
 let ticking = false;
+let lastKnownScrollY = 0;
 function requestTick(callback) {
+    lastKnownScrollY = window.scrollY;
     if (!ticking) {
         requestAnimationFrame(() => {
-            callback();
+            callback(lastKnownScrollY);
             ticking = false;
         });
         ticking = true;
@@ -144,28 +158,43 @@ function initZoomEffect() {
     
     // Cache values for performance
     let lastScrollY = -1;
+    let cachedViewportHeight = window.innerHeight;
     
-    function handleScroll() {
-        const scrollY = window.scrollY;
-        
-        // Skip if scroll position hasn't changed
-        if (scrollY === lastScrollY) return;
+    // Reduce animation complexity on mobile
+    const maxZoomScale = CONFIG.isMobile ? 8 : 14;
+    const transitionSpeed = CONFIG.isMobile ? '0.1s' : '0.15s';
+    
+    // Set initial transition speed
+    if (splineContainer) {
+        splineContainer.style.transition = `transform ${transitionSpeed} linear, opacity 0.3s ease`;
+    }
+    
+    function handleScroll(scrollY = window.scrollY) {
+        // Skip if scroll position hasn't changed significantly
+        if (Math.abs(scrollY - lastScrollY) < 2) return;
         lastScrollY = scrollY;
         
-        const viewportHeight = window.innerHeight;
-        const scrollProgress = Math.min(scrollY / (viewportHeight * 2), 1);
+        const scrollProgress = Math.min(scrollY / (cachedViewportHeight * 2), 1);
         
         // Check if scrolled past hero section
-        if (scrollY > heroHeight - viewportHeight) {
+        if (scrollY > heroHeight - cachedViewportHeight) {
             document.body.classList.add('scrolled-past-hero');
         } else {
             document.body.classList.remove('scrolled-past-hero');
         }
         
+        // Skip heavy animations if reduced motion is preferred
+        if (CONFIG.reducedMotion) {
+            if (scrollProgress > 0.5) {
+                heroContent?.classList.add('visible');
+            }
+            return;
+        }
+        
         // Spline Globe zoom effects based on scroll progress
         if (splineContainer) {
-            // Calculate zoom scale (1 to 15) - smoother zoom
-            const zoomScale = 1 + (scrollProgress * 14);
+            // Calculate zoom scale - reduced on mobile for performance
+            const zoomScale = 1 + (scrollProgress * maxZoomScale);
             
             // Apply zoom transform to container using GPU-accelerated properties
             splineContainer.style.transform = `scale3d(${zoomScale}, ${zoomScale}, 1)`;
@@ -451,9 +480,19 @@ function initImageErrorHandling() {
 function init() {
     // Wait for components to load
     setTimeout(() => {
+        // Update mobile detection
+        CONFIG.isMobile = window.innerWidth <= 768;
+        CONFIG.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        // Add mobile class to body for CSS optimizations
+        if (CONFIG.isMobile) {
+            document.body.classList.add('is-mobile');
+        }
+        if (CONFIG.isTouch) {
+            document.body.classList.add('is-touch');
+        }
+        
         initPreloader();
-        // initCustomCursor(); // Removed
-        // initParticles(); // Removed
         initZoomEffect();
         initNavigation();
         initRevealAnimations();
@@ -478,11 +517,15 @@ if (document.readyState === 'loading') {
     window.addEventListener('componentsLoaded', init);
 }
 
-// Re-initialize some features on window resize
-let resizeTimer;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-        CONFIG.heroHeight = window.innerHeight;
-    }, 250);
-});
+// Re-initialize some features on window resize with debouncing
+const handleResize = debounce(() => {
+    CONFIG.heroHeight = window.innerHeight;
+    CONFIG.isMobile = window.innerWidth <= 768;
+    CONFIG.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Update body classes
+    document.body.classList.toggle('is-mobile', CONFIG.isMobile);
+    document.body.classList.toggle('is-touch', CONFIG.isTouch);
+}, 250);
+
+window.addEventListener('resize', handleResize, { passive: true });
