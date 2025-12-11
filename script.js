@@ -452,8 +452,8 @@ function init() {
     // Wait for components to load
     setTimeout(() => {
         initPreloader();
-        initCustomCursor();
-        initParticles();
+        // initCustomCursor(); // Removed
+        // initParticles(); // Removed
         initZoomEffect();
         initNavigation();
         initRevealAnimations();
