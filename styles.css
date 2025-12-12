@@ -1142,6 +1142,9 @@ body.scrolled-past-hero .social-links {
 .section-header {
     text-align: center;
     margin-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .section-tag {
@@ -1150,7 +1153,7 @@ body.scrolled-past-hero .social-links {
     color: var(--gold);
     text-transform: uppercase;
     letter-spacing: 0.25rem;
-    margin-bottom: 1.25rem;
+    margin-top: 2rem;
     padding: 0.6rem 1.25rem;
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 50px;
