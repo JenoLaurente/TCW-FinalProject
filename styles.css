@@ -1348,8 +1348,8 @@ body.scrolled-past-hero .social-links {
 .team-track {
     display: flex;
     gap: 1.5rem;
-    animation: scrollTeam 25s linear infinite;
-    width: fit-content;
+    animation: scrollTeam 30s linear infinite;
+    width: max-content;
 }
 
 .team-track:hover {
@@ -1361,7 +1361,7 @@ body.scrolled-past-hero .social-links {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-50% - 0.75rem));
     }
 }
 
