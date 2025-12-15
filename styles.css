@@ -1336,6 +1336,35 @@ body.scrolled-past-hero .social-links {
     color: var(--gold);
 }
 
+/* Team Carousel - Auto-scrolling */
+.team-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.team-track {
+    display: flex;
+    gap: 1.5rem;
+    animation: scrollTeam 25s linear infinite;
+    width: fit-content;
+}
+
+.team-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollTeam {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
 .team-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -1345,10 +1374,12 @@ body.scrolled-past-hero .social-links {
 .member-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1.5rem;
+    padding: 1.5rem 2rem;
     border-radius: 15px;
     text-align: center;
     transition: var(--transition-medium);
+    flex-shrink: 0;
+    min-width: 180px;
 }
 
 .member-card:hover {
@@ -1373,6 +1404,7 @@ body.scrolled-past-hero .social-links {
     font-size: 0.95rem;
     color: var(--white);
     margin-bottom: 0.25rem;
+    white-space: nowrap;
 }
 
 .member-role {
@@ -1800,85 +1832,242 @@ body.scrolled-past-hero .social-links {
 }
 
 /* =====================================================
-   ISSUES SECTION
+   ISSUES SECTION - JOURNEY MAP
    ===================================================== */
 .issues-section {
     background: var(--navy-light);
+    overflow: visible;
 }
 
-.issues-timeline {
+/* Journey Map Container */
+.journey-map {
     position: relative;
-    padding-left: 3rem;
+    padding: 4rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.timeline-line {
+/* SVG Journey Path - Centered vertical line that curves */
+.journey-path {
     position: absolute;
-    left: 0;
     top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(180deg, var(--gold), transparent);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
 }
 
-.issue-item {
+.journey-line-bg {
+    opacity: 1;
+    stroke: rgba(212, 175, 55, 0.2);
+    stroke-width: 4;
+}
+
+.journey-line-progress {
+    stroke-width: 4;
+    transition: stroke-dashoffset 0.1s ease-out;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+}
+
+/* Journey Items - Alternating layout */
+.journey-item {
     position: relative;
-    margin-bottom: 3rem;
-    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 6rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
 }
 
-.issue-marker {
+.journey-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Left aligned items */
+.journey-item.journey-left {
+    flex-direction: row;
+    padding-right: calc(50% + 60px);
+}
+
+.journey-item.journey-left .journey-card {
+    margin-right: auto;
+}
+
+.journey-item.journey-left .journey-marker {
     position: absolute;
-    left: -3rem;
-    top: 0;
+    right: calc(50% - 30px);
+}
+
+/* Right aligned items */
+.journey-item.journey-right {
+    flex-direction: row-reverse;
+    padding-left: calc(50% + 60px);
+}
+
+.journey-item.journey-right .journey-card {
+    margin-left: auto;
+}
+
+.journey-item.journey-right .journey-marker {
+    position: absolute;
+    left: calc(50% - 30px);
+}
+
+/* Journey Marker (numbered circles) */
+.journey-marker {
     width: 60px;
     height: 60px;
-    background: var(--navy);
-    border: 2px solid var(--gold);
+    background: linear-gradient(135deg, var(--gold), #f4d03f);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--gold);
-    font-size: 1.25rem;
+    z-index: 5;
+    box-shadow: 0 5px 25px rgba(212, 175, 55, 0.5);
+    flex-shrink: 0;
 }
 
-.issue-content {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
-}
-
-.issue-content h3 {
+.marker-number {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--white);
+    font-weight: 700;
+    color: var(--navy);
 }
 
-.issue-content > p {
-    color: var(--gray-300);
-    margin-bottom: 1.5rem;
-    line-height: 1.7;
+.marker-ring {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 50%;
+    animation: pulseRing 2s ease-out infinite;
 }
 
-.issue-points {
+@keyframes pulseRing {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Journey Card */
+.journey-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease;
+    width: 100%;
+    max-width: 480px;
+}
+
+.journey-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* Card Image */
+.journey-card .card-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.journey-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.journey-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.journey-card .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10, 22, 40, 0.3), rgba(10, 22, 40, 0.6));
+}
+
+/* Card Content */
+.journey-card .card-content {
+    flex: 1;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    justify-content: center;
 }
 
-.issue-points li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
+.journey-card .card-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), #f4d03f);
+    color: var(--navy);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    width: fit-content;
+}
+
+.journey-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+}
+
+.journey-card .card-subtitle {
+    font-style: italic;
+    color: var(--gray-400);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.journey-card .card-desc {
     color: var(--gray-300);
     font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
 }
 
-.issue-points li i {
+.journey-card .card-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.journey-card .card-points li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--gray-300);
+    font-size: 0.9rem;
+}
+
+.journey-card .card-points li i {
     color: var(--gold);
-    margin-top: 0.25rem;
+    font-size: 0.8rem;
 }
 
 .issues-quote {
@@ -2552,15 +2741,56 @@ body.scrolled-past-hero .social-links {
         text-align: center;
     }
 
-    .issues-timeline {
-        padding-left: 2rem;
+    /* Journey Map Mobile Styles */
+    .journey-map {
+        padding: 2rem 0;
     }
-
-    .issue-marker {
-        width: 40px;
-        height: 40px;
-        left: -2rem;
-        font-size: 1rem;
+    
+    .journey-path {
+        display: none;
+    }
+    
+    .journey-item {
+        padding: 0 !important;
+        margin-bottom: 3rem;
+        opacity: 1;
+        transform: none;
+        flex-direction: column !important;
+    }
+    
+    .journey-item.journey-left,
+    .journey-item.journey-right {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    
+    .journey-item.journey-left .journey-marker,
+    .journey-item.journey-right .journey-marker {
+        position: relative;
+        left: auto !important;
+        right: auto !important;
+        margin: 0 auto 1.5rem auto;
+    }
+    
+    .journey-marker {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .journey-card {
+        max-width: 100%;
+    }
+    
+    .journey-card .card-image {
+        height: 180px;
+    }
+    
+    .journey-card .card-content {
+        padding: 1.5rem;
+    }
+    
+    .journey-card h3 {
+        font-size: 1.4rem;
     }
 
     .cursor,

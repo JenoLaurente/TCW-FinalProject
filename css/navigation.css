@@ -18,6 +18,11 @@
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
+.navbar.nav-hidden {
+    transform: translateY(-100%);
+    pointer-events: none;
+}
+
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;

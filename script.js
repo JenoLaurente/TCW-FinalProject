@@ -254,6 +254,7 @@ function initNavigation() {
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
     const scrollProgressBar = document.getElementById('scrollProgress');
+    const heroSection = document.getElementById('home');
     
     // Cache values for performance
     let lastNavScrollY = -1;
@@ -269,10 +270,20 @@ function initNavigation() {
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollPercent = (scrollY / docHeight) * 100;
         
+        // Get hero section height to determine when to hide navbar
+        const heroHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
+        
         if (scrollY > CONFIG.scrollThreshold) {
             navbar?.classList.add('scrolled');
         } else {
             navbar?.classList.remove('scrolled');
+        }
+        
+        // Hide navbar after scrolling past hero section
+        if (scrollY > heroHeight * 0.8) {
+            navbar?.classList.add('nav-hidden');
+        } else {
+            navbar?.classList.remove('nav-hidden');
         }
         
         // Update scroll progress bar
@@ -475,6 +486,73 @@ function initImageErrorHandling() {
 }
 
 // =====================================================
+// JOURNEY MAP ANIMATION
+// =====================================================
+function initJourneyMap() {
+    const journeyPath = document.querySelector('.journey-line-progress');
+    const journeyItems = document.querySelectorAll('.journey-item');
+    const journeyMap = document.querySelector('.journey-map');
+    
+    if (!journeyPath || !journeyMap) return;
+    
+    // Get the total length of the path
+    const pathLength = journeyPath.getTotalLength();
+    
+    // Set up the path for animation - start hidden
+    journeyPath.style.strokeDasharray = pathLength;
+    journeyPath.style.strokeDashoffset = pathLength;
+    
+    function animateJourney() {
+        const rect = journeyMap.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Calculate how much of the journey map is visible
+        const mapTop = rect.top;
+        const mapHeight = rect.height;
+        
+        // Progress calculation - starts as soon as section is 20% visible
+        // Completes when section is fully scrolled through
+        let progress = 0;
+        
+        if (mapTop < windowHeight * 0.8) {
+            // Slower progress calculation - takes longer to complete
+            const scrolledIntoSection = (windowHeight * 0.8) - mapTop;
+            const totalScrollDistance = mapHeight * 1.2; // Complete over 120% of section height (slower)
+            progress = Math.min(1, Math.max(0, scrolledIntoSection / totalScrollDistance));
+        }
+        
+        // Apply the progress to the path - draw the line
+        const drawLength = pathLength * (1 - progress);
+        journeyPath.style.strokeDashoffset = drawLength;
+        
+        // Animate journey items - show them quickly (cards still appear fast)
+        // Item 1: 5% progress, Item 2: 25% progress, Item 3: 45% progress
+        journeyItems.forEach((item, index) => {
+            const itemThreshold = (index * 0.2) + 0.05;
+            
+            if (progress >= itemThreshold) {
+                item.classList.add('active');
+            }
+        });
+    }
+    
+    // Initial call
+    animateJourney();
+    
+    // Add scroll listener with throttling for performance
+    let scrollTicking = false;
+    window.addEventListener('scroll', () => {
+        if (!scrollTicking) {
+            requestAnimationFrame(() => {
+                animateJourney();
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    }, { passive: true });
+}
+
+// =====================================================
 // INITIALIZATION
 // =====================================================
 function init() {
@@ -501,6 +579,7 @@ function init() {
         initBackToTop();
         initSoundToggle();
         initImageErrorHandling();
+        initJourneyMap();
         
         console.log('Dubai Cultural e-Portfolio initialized successfully!');
     }, 100);

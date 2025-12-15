@@ -1,60 +1,169 @@
 <section id="issues" class="section issues-section">
-    <div class="container">
-        <div class="section-header reveal-up">
-            <h2 class="section-title">Modern<br><span class="highlight">Issues</span></h2>
-            <span class="section-tag">Contemporary Challenges</span>
-        </div>
-        <div class="issues-timeline">
-            <div class="timeline-line"></div>
-            <div class="issue-item reveal-left">
-                <div class="issue-marker">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <div class="issue-content">
-                    <h3>Environmental Sustainability</h3>
-                    <p>As a desert city with rapid development, Dubai faces challenges in water scarcity, energy consumption, and carbon emissions. The city has responded with ambitious initiatives:</p>
-                    <ul class="issue-points">
-                        <li><i class="fas fa-check"></i> Dubai Clean Energy Strategy 2050 aims for 75% renewable energy</li>
-                        <li><i class="fas fa-check"></i> Mohammed bin Rashid Al Maktoum Solar Park - world's largest single-site solar project</li>
-                        <li><i class="fas fa-check"></i> Sustainable City: A net-zero energy community</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="issue-item reveal-right">
-                <div class="issue-marker">
-                    <i class="fas fa-hard-hat"></i>
-                </div>
-                <div class="issue-content">
-                    <h3>Labor & Human Rights</h3>
-                    <p>The construction boom has brought international scrutiny regarding migrant worker conditions. Recent reforms show progress:</p>
-                    <ul class="issue-points">
-                        <li><i class="fas fa-check"></i> Wage Protection System ensures timely salary payments</li>
-                        <li><i class="fas fa-check"></i> Midday work ban during summer heat</li>
-                        <li><i class="fas fa-check"></i> New labor laws allowing job mobility and fair contracts</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="issue-item reveal-left">
-                <div class="issue-marker">
-                    <i class="fas fa-balance-scale"></i>
-                </div>
-                <div class="issue-content">
-                    <h3>Cultural Identity vs. Globalization</h3>
-                    <p>Balancing traditional values with cosmopolitan influences presents unique challenges for Emirati identity:</p>
-                    <ul class="issue-points">
-                        <li><i class="fas fa-check"></i> Emiratization policies to include nationals in workforce</li>
-                        <li><i class="fas fa-check"></i> Heritage villages and museums preserve traditions</li>
-                        <li><i class="fas fa-check"></i> Arabic language initiatives in education</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="issues-quote reveal-up">
-            <blockquote>
-                <i class="fas fa-quote-left"></i>
-                <p>"The future belongs to those who can imagine it, design it, and execute it. Dubai is the place where dreamers can realize their visions."</p>
-                <cite>— Sheikh Mohammed bin Rashid Al Maktoum</cite>
-            </blockquote>
-        </div>
+  <div class="container">
+    <div class="section-header reveal-up">
+      <h2 class="section-title">
+        Modern<br /><span class="highlight">Issues</span>
+      </h2>
+      <span class="section-tag">Contemporary Challenges</span>
     </div>
+
+    <!-- Journey Map Timeline -->
+    <div class="journey-map">
+      <!-- Animated SVG Path -->
+      <svg
+        class="journey-path"
+        viewBox="0 0 100 1000"
+        preserveAspectRatio="none"
+      >
+        <path
+          class="journey-line-bg"
+          d="M 50 0 
+                    C 10 100, 10 150, 50 200 
+                    C 90 250, 90 300, 50 350 
+                    C 10 400, 10 450, 50 500
+                    C 90 550, 90 600, 50 650
+                    C 10 700, 10 750, 50 800
+                    C 90 850, 90 900, 50 1000"
+          fill="none"
+          stroke="rgba(212, 175, 55, 0.2)"
+          stroke-width="3"
+        />
+        <path
+          class="journey-line-progress"
+          d="M 50 0 
+                    C 10 100, 10 150, 50 200 
+                    C 90 250, 90 300, 50 350 
+                    C 10 400, 10 450, 50 500
+                    C 90 550, 90 600, 50 650
+                    C 10 700, 10 750, 50 800
+                    C 90 850, 90 900, 50 1000"
+          fill="none"
+          stroke="url(#goldGradient)"
+          stroke-width="3"
+          stroke-linecap="round"
+        />
+        <defs>
+          <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color: #d4af37; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #f4d03f; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <!-- Journey Items -->
+      <div class="journey-item journey-left" data-index="1">
+        <div class="journey-card">
+          <div class="card-image">
+            <img
+              src="../image/Environmental.jpg"
+              alt="Environmental Sustainability"
+            />
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Environmental</span>
+            <h3>Sustainability</h3>
+            <p class="card-subtitle">Green Initiatives</p>
+            <p class="card-desc">
+              Dubai faces challenges in water scarcity, energy consumption, and
+              carbon emissions. The city has responded with ambitious
+              initiatives.
+            </p>
+            <ul class="card-points">
+              <li>
+                <i class="fas fa-check"></i> Dubai Clean Energy Strategy 2050
+              </li>
+              <li>
+                <i class="fas fa-check"></i> World's largest single-site solar
+                project
+              </li>
+              <li>
+                <i class="fas fa-check"></i> Sustainable City: Net-zero energy
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="journey-marker">
+          <span class="marker-number">I</span>
+          <div class="marker-ring"></div>
+        </div>
+      </div>
+
+      <div class="journey-item journey-right" data-index="2">
+        <div class="journey-marker">
+          <span class="marker-number">II</span>
+          <div class="marker-ring"></div>
+        </div>
+        <div class="journey-card">
+          <div class="card-image">
+            <img
+              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
+              alt="Labor Rights"
+            />
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Labor Rights</span>
+            <h3>Human Rights</h3>
+            <p class="card-subtitle">Worker Protection</p>
+            <p class="card-desc">
+              The construction boom has brought international scrutiny regarding
+              migrant worker conditions. Recent reforms show progress.
+            </p>
+            <ul class="card-points">
+              <li><i class="fas fa-check"></i> Wage Protection System</li>
+              <li>
+                <i class="fas fa-check"></i> Midday work ban during summer
+              </li>
+              <li>
+                <i class="fas fa-check"></i> New labor laws for job mobility
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="journey-item journey-left" data-index="3">
+        <div class="journey-card">
+          <div class="card-image">
+            <img
+              src="../image/Cultural Balance.jpeg"
+              alt="Cultural Identity"
+            />
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Identity</span>
+            <h3>Cultural Balance</h3>
+            <p class="card-subtitle">Tradition vs Globalization</p>
+            <p class="card-desc">
+              Balancing traditional values with cosmopolitan influences presents
+              unique challenges for Emirati identity.
+            </p>
+            <ul class="card-points">
+              <li><i class="fas fa-check"></i> Emiratization policies</li>
+              <li><i class="fas fa-check"></i> Heritage villages & museums</li>
+              <li><i class="fas fa-check"></i> Arabic language initiatives</li>
+            </ul>
+          </div>
+        </div>
+        <div class="journey-marker">
+          <span class="marker-number">III</span>
+          <div class="marker-ring"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="issues-quote reveal-up">
+      <blockquote>
+        <i class="fas fa-quote-left"></i>
+        <p>
+          "The future belongs to those who can imagine it, design it, and
+          execute it. Dubai is the place where dreamers can realize their
+          visions."
+        </p>
+        <cite>— Sheikh Mohammed bin Rashid Al Maktoum</cite>
+      </blockquote>
+    </div>
+  </div>
 </section>
